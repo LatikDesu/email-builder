@@ -1,9 +1,9 @@
-import { create } from 'zustand';
-import { subscribeWithSelector } from 'zustand/middleware';
+import { create } from 'zustand'
+import { subscribeWithSelector } from 'zustand/middleware'
 
-import { getConfiguration } from '../../shared/lib';
+import { getConfiguration } from '@entities/document'
 
-import { TEditorConfiguration } from './core';
+import { TEditorConfiguration } from './core'
 
 type TValue = {
   document: TEditorConfiguration;

@@ -1,10 +1,9 @@
 {
-  "name": "@listmonk/email-builder",
+  "name": "@email-builder",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:test": "vite --config vite.test.config.ts",
     "build": "vite build",
     "preview": "vite preview"
   },

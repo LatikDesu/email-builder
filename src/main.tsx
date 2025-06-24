@@ -20,7 +20,6 @@ function render(containerId: string, props: AppProps, force: boolean = false) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    // Inject CSS variables for email builder theme
     injectEmailBuilderCSS();
 
     ReactDOM.createRoot(container).render(

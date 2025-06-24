@@ -58,7 +58,6 @@ export default function App(props: AppProps) {
   return (
     <>
       <InspectorDrawer />
-
       <Layout 
         direction="column"
         style={containerStyle}

@@ -1,2 +1,3 @@
-// Document Entity
-export * from './config';
+export * from './config'
+export { default as getConfiguration } from './lib/getConfiguration'
+
