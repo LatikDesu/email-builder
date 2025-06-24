@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App, { AppProps, DEFAULT_SOURCE } from './App';
-import { setDocument, resetDocument } from './documents/editor/EditorContext';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App, { AppProps, DEFAULT_SOURCE } from './App'
+import { resetDocument, setDocument } from './documents/editor/EditorContext'
 
-import { CssBaseline, ThemeProvider } from '@mui/material';
-import theme from './theme';
+import { Theme, presetGpnDefault } from '@consta/uikit/Theme'
+import { injectEmailBuilderCSS } from './shared/config/theme'
 
 function isRendered(containerId: string): boolean {
   const container = document.getElementById(containerId);
@@ -20,15 +20,18 @@ function render(containerId: string, props: AppProps, force: boolean = false) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
+    // Inject CSS variables for email builder theme
+    injectEmailBuilderCSS();
+
     ReactDOM.createRoot(container).render(
       <React.StrictMode>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
+        <Theme preset={presetGpnDefault}>
           <App {...props} />
-        </ThemeProvider>
+        </Theme>
       </React.StrictMode>
     );
   }
 }
 
-export { App, setDocument, resetDocument, render, isRendered, DEFAULT_SOURCE };
+export { App, DEFAULT_SOURCE, isRendered, render, resetDocument, setDocument }
+

@@ -1,59 +1,77 @@
-import React from 'react';
+import React from 'react'
 
-import {
-  Box, Drawer, Tab, Tabs,
-} from '@mui/material';
+import { useInspectorDrawerOpen, useSelectedBlockId } from '../../documents/editor/EditorContext'
 
-import { setSidebarTab, useInspectorDrawerOpen, useSelectedSidebarTab } from '../../documents/editor/EditorContext';
-
-import ConfigurationPanel from './ConfigurationPanel';
-import StylesPanel from './StylesPanel';
+import ConfigurationPanel from './ConfigurationPanel'
+import EmailSettingsPanel from './EmailSettingsPanel'
 
 export const INSPECTOR_DRAWER_WIDTH = 320;
 
 export default function InspectorDrawer() {
-  const selectedSidebarTab = useSelectedSidebarTab();
   const inspectorDrawerOpen = useInspectorDrawerOpen();
+  const selectedBlockId = useSelectedBlockId();
 
-  const renderCurrentSidebarPanel = () => {
-    switch (selectedSidebarTab) {
-      case 'block-configuration':
-        return <ConfigurationPanel />;
-      case 'styles':
-        return <StylesPanel />;
+  const sidebarStyle: React.CSSProperties = {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    width: inspectorDrawerOpen ? INSPECTOR_DRAWER_WIDTH : 0,
+    height: '100%',
+    backgroundColor: 'var(--email-builder-bg-paper)',
+    borderLeft: '1px solid var(--email-builder-cadet-300, #DCE4EA)',
+    transition: 'width 225ms cubic-bezier(0.0, 0, 0.2, 1)',
+    overflow: 'hidden',
+    zIndex: 1,
+  };
+
+  const headerStyle: React.CSSProperties = {
+    width: INSPECTOR_DRAWER_WIDTH,
+    height: 49,
+    borderBottom: '1px solid var(--email-builder-cadet-300, #DCE4EA)',
+    padding: '0 16px',
+    display: 'flex',
+    alignItems: 'center',
+    fontSize: '14px',
+    fontWeight: 600,
+    color: 'var(--email-builder-text-primary)',
+  };
+
+  const contentStyle: React.CSSProperties = {
+    width: INSPECTOR_DRAWER_WIDTH,
+    height: 'calc(100% - 49px)',
+    overflow: 'auto',
+  };
+
+  if (!inspectorDrawerOpen) {
+    return null;
+  }
+
+  const renderCurrentPanel = () => {
+    if (selectedBlockId) {
+      // Показываем инспектор выбранного блока
+      return <ConfigurationPanel />;
+    } else {
+      // Показываем настройки письма когда ничего не выбрано
+      return <EmailSettingsPanel />;
+    }
+  };
+
+  const getHeaderTitle = () => {
+    if (selectedBlockId) {
+      return 'Block Properties';
+    } else {
+      return 'Email Settings';
     }
   };
 
   return (
-    <Drawer
-      variant="persistent"
-      anchor="right"
-      className="sidebar"
-      open={inspectorDrawerOpen}
-      sx={{
-        width: inspectorDrawerOpen ? INSPECTOR_DRAWER_WIDTH : 0,
-      }}
-      // Make the drawer relative to the wrapper instead of body.
-      PaperProps={{ style: { position: 'absolute', zIndex: 0 } }}
-      ModalProps={{
-        container: document.querySelector('.email-builder-container'),
-        style: { position: 'absolute', zIndex: 0 },
-      }}
-    >
-      <Box sx={{
-        width: INSPECTOR_DRAWER_WIDTH, height: 49, borderBottom: 1, borderColor: 'divider',
-      }}
-      >
-        <Box px={2}>
-          <Tabs value={selectedSidebarTab} onChange={(_, v) => setSidebarTab(v)}>
-            <Tab value="styles" label="Styles" />
-            <Tab value="block-configuration" label="Inspect" />
-          </Tabs>
-        </Box>
-      </Box>
-      <Box sx={{ width: INSPECTOR_DRAWER_WIDTH, height: 'calc(100% - 49px)', overflow: 'auto' }}>
-        {renderCurrentSidebarPanel()}
-      </Box>
-    </Drawer>
+    <div style={sidebarStyle}>
+      <div style={headerStyle}>
+        {getHeaderTitle()}
+      </div>
+      <div style={contentStyle}>
+        {renderCurrentPanel()}
+      </div>
+    </div>
   );
 }

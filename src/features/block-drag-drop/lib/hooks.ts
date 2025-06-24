@@ -4,8 +4,8 @@ import { CSS } from '@dnd-kit/utilities'
 import { useCallback } from 'react'
 import { BlockDragState, DraggableBlockItem, DroppableBlockZone } from '../config/types'
 
-// Hook for making blocks draggable
-export const useDraggableBlock = (blockId: string, blockType: string) => {
+// Hook for making blocks draggable (from palette)
+export const useDraggableBlock = (blockId: string, blockType: string, content?: string) => {
   const {
     attributes,
     listeners,
@@ -15,14 +15,17 @@ export const useDraggableBlock = (blockId: string, blockType: string) => {
   } = useDraggable({
     id: blockId,
     data: {
+      id: blockId,
       type: blockType,
       blockId,
+      content: content, // Добавляем content для использования в drop handler
+      draggable: true, // Mark as draggable (from palette)
     } as DraggableBlockItem,
   })
 
   const style = {
-    transform: CSS.Translate.toString(transform),
-    opacity: isDragging ? 0.5 : 1,
+    // Don't apply transform to palette blocks - they should stay in place
+    opacity: isDragging ? 0.6 : 1, // Slightly transparent when dragging to show it's active
   }
 
   return {
@@ -39,8 +42,10 @@ export const useDroppableContainer = (containerId: string, containerType: string
   const { isOver, setNodeRef } = useDroppable({
     id: containerId,
     data: {
+      id: containerId,
       containerId,
       containerType,
+      droppable: true, // Mark as droppable
       accepts: ['text', 'heading', 'button', 'image', 'divider', 'spacer', 'container'],
     } as DroppableBlockZone,
   })
@@ -53,7 +58,7 @@ export const useDroppableContainer = (containerId: string, containerType: string
 }
 
 // Hook for sortable blocks within containers
-export const useSortableBlock = (blockId: string, blockType: string) => {
+export const useSortableBlock = (blockId: string, blockType: string, containerId?: string) => {
   const {
     attributes,
     listeners,
@@ -64,8 +69,13 @@ export const useSortableBlock = (blockId: string, blockType: string) => {
   } = useSortable({
     id: blockId,
     data: {
+      id: blockId,
       type: blockType,
       blockId,
+      sortable: {
+        containerId: containerId, // Important: specify which container this belongs to
+        index: 0, // TODO: get actual index
+      },
     } as DraggableBlockItem,
   })
 

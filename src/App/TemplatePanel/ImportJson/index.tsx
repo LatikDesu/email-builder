@@ -1,26 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
-import { FileUploadOutlined } from '@mui/icons-material';
-import { IconButton, Tooltip } from '@mui/material';
+import { IconUpload } from '@consta/icons/IconUpload'
+import { Button } from '@consta/uikit/Button'
 
-import ImportJsonDialog from './ImportJsonDialog';
+import ImportJsonDialog from './ImportJsonDialog'
 
 export default function ImportJson() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
 
-  let dialog = null;
+  let dialog = null
   if (open) {
-    dialog = <ImportJsonDialog onClose={() => setOpen(false)} />;
+    dialog = <ImportJsonDialog onClose={() => setOpen(false)} />
   }
 
   return (
     <>
-      <Tooltip title="Import JSON">
-        <IconButton onClick={() => setOpen(true)}>
-          <FileUploadOutlined fontSize="small" />
-        </IconButton>
-      </Tooltip>
+      <Button
+        onClick={() => setOpen(true)}
+        view="ghost"
+        size="s"
+        iconLeft={IconUpload}
+        onlyIcon
+        title="Import JSON"
+      />
       {dialog}
     </>
-  );
+  )
 }

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react'
 
-import { Box, Slider, Stack, Typography } from '@mui/material';
+import { Slider } from '@consta/uikit/Slider'
 
 type SliderInputProps = {
   iconLabel: JSX.Element;
@@ -16,25 +16,54 @@ type SliderInputProps = {
 };
 
 export default function RawSliderInput({ iconLabel, value, setValue, units, ...props }: SliderInputProps) {
+  const containerStyle: React.CSSProperties = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '16px',
+    width: '100%',
+    marginBottom: '16px'
+  };
+
+  const iconStyle: React.CSSProperties = {
+    minWidth: '24px',
+    lineHeight: 1,
+    flexShrink: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  };
+
+  const sliderStyle: React.CSSProperties = {
+    flex: 1
+  };
+
+  const valueStyle: React.CSSProperties = {
+    minWidth: '32px',
+    textAlign: 'right',
+    flexShrink: 0,
+    fontSize: '12px',
+    color: 'var(--email-builder-text-secondary)',
+    lineHeight: 1
+  };
+
   return (
-    <Stack direction="row" alignItems="center" spacing={2} justifyContent="space-between" width="100%">
-      <Box sx={{ minWidth: 24, lineHeight: 1, flexShrink: 0 }}>{iconLabel}</Box>
-      <Slider
-        {...props}
-        value={value}
-        onChange={(_, value: unknown) => {
-          if (typeof value !== 'number') {
-            throw new Error('RawSliderInput values can only receive numeric values');
-          }
-          setValue(value);
-        }}
-      />
-      <Box sx={{ minWidth: 32, textAlign: 'right', flexShrink: 0 }}>
-        <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1 }}>
-          {value}
-          {units}
-        </Typography>
-      </Box>
-    </Stack>
+    <div style={containerStyle}>
+      <div style={iconStyle}>{iconLabel}</div>
+      <div style={sliderStyle}>
+        <Slider
+          {...props}
+          value={value}
+          onChange={(value) => {
+            if (typeof value !== 'number') {
+              throw new Error('RawSliderInput values can only receive numeric values');
+            }
+            setValue(value);
+          }}
+        />
+      </div>
+      <div style={valueStyle}>
+        {value}{units}
+      </div>
+    </div>
   );
 }

@@ -6,6 +6,7 @@ import { DragItem, DropZone } from '@shared/lib/dnd'
 export interface DraggableBlockItem extends DragItem {
   type: BlockType
   blockId: string
+  content?: string
   sourceContainer?: string
   originalIndex?: number
 }

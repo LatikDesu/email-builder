@@ -1,11 +1,11 @@
-import React from 'react';
-import { Stack, useTheme } from '@mui/material';
-import { renderToStaticMarkup } from '@usewaypoint/email-builder';
+import { Layout } from '@consta/uikit/Layout'
+import { renderToStaticMarkup } from '@usewaypoint/email-builder'
+import React from 'react'
 
-import { TEditorConfiguration } from '../documents/editor/core';
-import { useInspectorDrawerOpen, useSamplesDrawerOpen, subscribeDocument, setDocument } from '../documents/editor/EditorContext';
-import InspectorDrawer, { INSPECTOR_DRAWER_WIDTH } from './InspectorDrawer';
-import TemplatePanel from './TemplatePanel';
+import { TEditorConfiguration } from '../documents/editor/core'
+import { setDocument, subscribeDocument, useInspectorDrawerOpen, useSamplesDrawerOpen } from '../documents/editor/EditorContext'
+import InspectorDrawer, { INSPECTOR_DRAWER_WIDTH } from './InspectorDrawer'
+import TemplatePanel from './TemplatePanel'
 
 export const DEFAULT_SOURCE: TEditorConfiguration = {
   "root": {
@@ -14,12 +14,11 @@ export const DEFAULT_SOURCE: TEditorConfiguration = {
   }
 }
 
-function useDrawerTransition(cssProperty: 'margin-left' | 'margin-right', open: boolean) {
-  const { transitions } = useTheme();
-  return transitions.create(cssProperty, {
-    easing: !open ? transitions.easing.sharp : transitions.easing.easeOut,
-    duration: !open ? transitions.duration.leavingScreen : transitions.duration.enteringScreen,
-  });
+// CSS transition utility for drawer animations
+function createTransition(property: string, open: boolean): string {
+  const duration = open ? '225ms' : '195ms';
+  const easing = open ? 'cubic-bezier(0.0, 0, 0.2, 1)' : 'cubic-bezier(0.4, 0, 1, 1)';
+  return `${property} ${duration} ${easing}`;
 }
 
 export interface AppProps {
@@ -35,8 +34,8 @@ export default function App(props: AppProps) {
   const inspectorDrawerOpen = useInspectorDrawerOpen();
   const samplesDrawerOpen = useSamplesDrawerOpen();
 
-  const marginLeftTransition = useDrawerTransition('margin-left', samplesDrawerOpen);
-  const marginRightTransition = useDrawerTransition('margin-right', inspectorDrawerOpen);
+  const marginLeftTransition = createTransition('margin-left', samplesDrawerOpen);
+  const marginRightTransition = createTransition('margin-right', inspectorDrawerOpen);
 
   if (props.data) {
     setDocument(props.data)
@@ -50,19 +49,22 @@ export default function App(props: AppProps) {
     })
   }
 
+  const containerStyle: React.CSSProperties = {
+    marginRight: inspectorDrawerOpen ? `${INSPECTOR_DRAWER_WIDTH}px` : 0,
+    transition: [marginLeftTransition, marginRightTransition].join(', '),
+    height: props.height ? props.height : 'auto',
+  };
+
   return (
     <>
       <InspectorDrawer />
 
-      <Stack
-        sx={{
-          marginRight: inspectorDrawerOpen ? `${INSPECTOR_DRAWER_WIDTH}px` : 0,
-          transition: [marginLeftTransition, marginRightTransition].join(', '),
-          height: props.height ? props.height : 'auto',
-        }}
+      <Layout 
+        direction="column"
+        style={containerStyle}
       >
         <TemplatePanel />
-      </Stack>
+      </Layout>
     </>
   );
 }

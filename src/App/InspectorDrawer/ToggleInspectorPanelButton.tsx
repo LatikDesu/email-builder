@@ -1,9 +1,10 @@
-import React from 'react';
+import React from 'react'
 
-import { AppRegistrationOutlined, LastPageOutlined } from '@mui/icons-material';
-import { IconButton } from '@mui/material';
+import { IconArrowRight } from '@consta/icons/IconArrowRight'
+import { IconSettings } from '@consta/icons/IconSettings'
+import { Button } from '@consta/uikit/Button'
 
-import { toggleInspectorDrawerOpen, useInspectorDrawerOpen } from '../../documents/editor/EditorContext';
+import { toggleInspectorDrawerOpen, useInspectorDrawerOpen } from '../../documents/editor/EditorContext'
 
 export default function ToggleInspectorPanelButton() {
   const inspectorDrawerOpen = useInspectorDrawerOpen();
@@ -11,16 +12,32 @@ export default function ToggleInspectorPanelButton() {
   const handleClick = () => {
     toggleInspectorDrawerOpen();
   };
+
+  const buttonStyle: React.CSSProperties = {
+    minWidth: 'auto',
+    padding: '8px'
+  };
+
   if (inspectorDrawerOpen) {
     return (
-      <IconButton onClick={handleClick}>
-        <LastPageOutlined fontSize="small" />
-      </IconButton>
+      <Button
+        onClick={handleClick}
+        view="clear"
+        size="s"
+        iconLeft={IconArrowRight}
+        onlyIcon
+        style={buttonStyle}
+      />
     );
   }
   return (
-    <IconButton onClick={handleClick}>
-      <AppRegistrationOutlined fontSize="small" />
-    </IconButton>
+    <Button
+      onClick={handleClick}
+      view="clear"
+      size="s"
+      iconLeft={IconSettings}
+      onlyIcon
+      style={buttonStyle}
+    />
   );
 }

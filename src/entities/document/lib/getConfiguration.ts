@@ -1,4 +1,4 @@
-import EMPTY_EMAIL_MESSAGE from './sample/empty-email-message';
+import { EMPTY_EMAIL_TEMPLATE } from '../config'
 
 export default function getConfiguration(template: string) {
   if (template.startsWith('#code/')) {
@@ -11,5 +11,5 @@ export default function getConfiguration(template: string) {
     }
   }
 
-  return EMPTY_EMAIL_MESSAGE;
+  return EMPTY_EMAIL_TEMPLATE;
 }

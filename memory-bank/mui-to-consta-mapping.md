@@ -1,213 +1,248 @@
-# Material-UI to Consta Component Mapping
+# Material-UI to Consta Migration Guide
 
-## Analysis Summary
-**Total MUI imports found**: 50+ files
-**Main MUI components used**: Layout, Forms, Buttons, Icons, Feedback
+## Phase 4.1: Component Migration Mapping
 
-## Component Mapping Table
+**Status**: Phase 4 - Active Migration
+**Priority**: High - Core UI Migration
 
-### Layout Components
-| Material-UI | Consta Equivalent | Notes |
-|-------------|------------------|-------|
-| `Stack` | `Layout` | Use Layout with direction prop |
-| `Box` | `div` with CSS classes | Use Consta spacing system |
-| `Paper` | `Card` | Card component for elevated surfaces |
+---
 
-### Form Components
-| Material-UI | Consta Equivalent | Notes |
-|-------------|------------------|-------|
-| `TextField` | `TextField` | Direct equivalent available |
-| `MenuItem` | `Select` options | Use Select component items |
-| `InputLabel` | `Text` | Use Text component with appropriate size |
-| `FormControlLabel` | Custom wrapper | Combine Checkbox/Switch with Text |
-| `Switch` | `Switch` | Direct equivalent available |
-| `Slider` | `Slider` | Direct equivalent available |
+## 📊 **MUI Component Audit Results**
 
-### Button Components
-| Material-UI | Consta Equivalent | Notes |
-|-------------|------------------|-------|
-| `Button` | `Button` | Direct equivalent, map view prop |
-| `IconButton` | `Button` | Use Button with iconLeft/iconRight |
-| `ToggleButton` | `Button` | Use Button with checked state |
-| `ToggleButtonGroup` | `RadioGroup` | For single selection |
-| `ButtonBase` | `Button` | Use Button with view="clear" |
+### Found MUI Components (38 files):
+- **Layout**: Box, Stack, Paper
+- **Navigation**: Tabs, Tab, ToggleButton, ToggleButtonGroup, Menu
+- **Inputs**: TextField, Slider, Switch, Button, ButtonBase, IconButton
+- **Display**: Typography, InputLabel, FormControlLabel
+- **Feedback**: Tooltip, Snackbar
+- **Utils**: Drawer, Dialog, CssBaseline, ThemeProvider
 
-### Navigation Components
-| Material-UI | Consta Equivalent | Notes |
-|-------------|------------------|-------|
-| `Tabs` | `Tabs` | Direct equivalent available |
-| `Tab` | `Tabs.Tab` | Use Tabs component items |
+---
 
-### Feedback Components
-| Material-UI | Consta Equivalent | Notes |
-|-------------|------------------|-------|
-| `Tooltip` | `Tooltip` | Direct equivalent available |
-| `Snackbar` | `SnackBar` | Direct equivalent available |
-| `Menu` | `ContextMenu` | Use ContextMenu for dropdown menus |
+## 🎯 **Migration Strategy**
 
-### Typography
-| Material-UI | Consta Equivalent | Notes |
-|-------------|------------------|-------|
-| `Typography` | `Text` | Use Text with size and weight props |
-
-### Theme Components
-| Material-UI | Consta Equivalent | Notes |
-|-------------|------------------|-------|
-| `ThemeProvider` | `Theme` | Use Consta Theme component |
-| `CssBaseline` | Not needed | Consta handles base styles |
-
-### Icons
-| Material-UI Icons | Consta Equivalent | Notes |
-|------------------|------------------|-------|
-| `@mui/icons-material` | `@consta/icons` | Replace with Consta icon set |
-| Various icons | Equivalent Consta icons | Map specific icons as needed |
-
-## Prop Mapping
-
-### Button Props
-| MUI Prop | Consta Prop | Values |
-|----------|-------------|--------|
-| `variant="contained"` | `view="primary"` | Primary button style |
-| `variant="outlined"` | `view="secondary"` | Secondary button style |
-| `variant="text"` | `view="clear"` | Text button style |
-| `color="primary"` | `view="primary"` | Primary color |
-| `color="secondary"` | `view="secondary"` | Secondary color |
-
-### TextField Props
-| MUI Prop | Consta Prop | Notes |
-|----------|-------------|-------|
-| `label` | `label` | Direct mapping |
-| `value` | `value` | Direct mapping |
-| `onChange` | `onChange` | Direct mapping |
-| `variant` | `view` | Map variants to views |
-
-### Typography Props
-| MUI Prop | Consta Prop | Values |
-|----------|-------------|--------|
-| `variant="h1"` | `size="3xl"` | Largest heading |
-| `variant="h2"` | `size="2xl"` | Large heading |
-| `variant="h3"` | `size="xl"` | Medium heading |
-| `variant="h4"` | `size="l"` | Small heading |
-| `variant="h5"` | `size="m"` | Body large |
-| `variant="h6"` | `size="s"` | Body medium |
-| `variant="body1"` | `size="m"` | Body text |
-| `variant="body2"` | `size="s"` | Small text |
-
-## Migration Strategy
-
-### Phase 1: Core Components (Week 1)
-- [ ] Replace Button components
-- [ ] Replace Typography → Text
-- [ ] Replace basic layout (Stack, Box)
-- [ ] Update theme provider
-
-### Phase 2: Form Components (Week 2)
-- [ ] Replace TextField components
-- [ ] Replace form controls (Switch, Slider)
-- [ ] Replace input labels
-- [ ] Update form validation styling
-
-### Phase 3: Complex Components (Week 3)
-- [ ] Replace Tabs navigation
-- [ ] Replace Menu/Dropdown components
-- [ ] Replace feedback components (Tooltip, Snackbar)
-- [ ] Update icon usage
-
-### Phase 4: Polish & Cleanup (Week 4)
-- [ ] Remove MUI dependencies
-- [ ] Update custom components
-- [ ] Final styling adjustments
-- [ ] Performance testing
-
-## Breaking Changes to Address
-
-### 1. Theme Structure
-- MUI theme object structure differs from Consta
-- Need to migrate custom theme values
-- Update theme provider setup
-
-### 2. CSS-in-JS vs CSS Classes
-- MUI uses emotion/styled-components
-- Consta uses CSS classes and CSS variables
-- Update styling approach
-
-### 3. Icon Import Paths
-- Change from `@mui/icons-material` to `@consta/icons`
-- Map icon names to Consta equivalents
-- Update icon sizes and colors
-
-### 4. Event Handlers
-- Some event handler signatures may differ
-- Update onChange, onClick handlers as needed
-
-### 5. Responsive Breakpoints
-- MUI and Consta may have different breakpoint systems
-- Update responsive design accordingly
-
-## Custom Components Requiring Redesign
-
-### 1. Color Picker Components
-- `ColorInput/BaseColorInput.tsx`
-- `ColorInput/Picker.tsx`
-- `ColorInput/Swatch.tsx`
-- **Action**: Redesign with Consta components
-
-### 2. Complex Form Inputs
-- `ColumnWidthsInput.tsx`
-- `PaddingInput.tsx`
-- `FontSizeInput.tsx`
-- **Action**: Rebuild with Consta form components
-
-### 3. Block Menu System
-- `AddBlockMenu/BlocksMenu.tsx`
-- `AddBlockMenu/BlockButton.tsx`
-- **Action**: Redesign as Consta-based draggable palette
-
-### 4. Editor Wrapper Components
-- `EditorBlockWrapper.tsx`
-- `TuneMenu.tsx`
-- **Action**: Update with Consta styling and drag handles
-
-## Compatibility Bridge Strategy
-
-Create temporary bridge components to ease migration:
-
-```typescript
-// Example bridge component
-export const CompatButton = ({ variant, color, ...props }) => {
-  const constaProps = {
-    view: mapVariantToView(variant),
-    status: mapColorToStatus(color),
-    ...props
-  };
-  return <ConstaButton {...constaProps} />;
-};
+### Priority 1: Core Layout & Typography
+```
+Box → Consta Layout/div with CSS classes
+Stack → Consta Layout with direction prop
+Typography → Consta Text component
 ```
 
-## Testing Strategy
+### Priority 2: Form Inputs
+```
+TextField → Consta TextField
+Button → Consta Button
+IconButton → Consta Button with iconOnly
+Switch → Consta Switch
+Slider → Consta Slider
+```
 
-### 1. Component-by-Component Testing
-- Test each migrated component individually
-- Verify visual consistency
-- Check functionality preservation
+### Priority 3: Navigation & Feedback
+```
+Tabs/Tab → Consta Tabs/Tab
+ToggleButton → Consta ChoiceGroup
+Menu → Consta ContextMenu
+Tooltip → Consta Tooltip
+```
 
-### 2. Integration Testing
-- Test component interactions
-- Verify form workflows
-- Check responsive behavior
+---
 
-### 3. Visual Regression Testing
-- Compare before/after screenshots
-- Ensure design consistency
-- Validate theme application
+## 📋 **Detailed Component Mapping**
 
-## Timeline Estimation
+### 1. Layout Components
 
-- **Week 1**: Core components (Buttons, Typography, Layout) - 25%
-- **Week 2**: Form components (Inputs, Controls) - 50%
-- **Week 3**: Complex components (Navigation, Feedback) - 75%
-- **Week 4**: Polish, cleanup, testing - 100%
+| MUI Component | Consta Equivalent | Migration Notes |
+|---------------|-------------------|-----------------|
+| `Box` | `<div>` + CSS classes | Use Consta spacing/layout utilities |
+| `Stack` | `Layout` | Use `direction`, `space` props |
+| `Paper` | `Card` | Use Consta Card with appropriate shadow |
+| `Container` | `Layout` | Use maxWidth with Consta breakpoints |
 
-**Total Estimated Time**: 4 weeks
-**Risk Level**: Medium (due to extensive MUI usage)
-**Mitigation**: Gradual migration with bridge components 
+**Example Migration:**
+```tsx
+// Before (MUI)
+<Box sx={{ p: 2, m: 1 }}>
+  <Stack direction="row" spacing={2}>
+    <Typography variant="h6">Title</Typography>
+  </Stack>
+</Box>
+
+// After (Consta)
+<Layout className="p-2 m-1">
+  <Layout direction="row" space="s">
+    <Text size="l" weight="semibold">Title</Text>
+  </Layout>
+</Layout>
+```
+
+### 2. Form Input Components
+
+| MUI Component | Consta Equivalent | Migration Notes |
+|---------------|-------------------|-----------------|
+| `TextField` | `TextField` | Similar API, check validation props |
+| `Button` | `Button` | Map variant: contained→primary, outlined→secondary |
+| `IconButton` | `Button` | Use `iconOnly` prop, `size="xs"` |
+| `Switch` | `Switch` | Similar API |
+| `Slider` | `Slider` | Check value/onChange API differences |
+
+**Example Migration:**
+```tsx
+// Before (MUI)
+<TextField
+  variant="outlined"
+  label="Email"
+  value={value}
+  onChange={(e) => setValue(e.target.value)}
+/>
+<Button variant="contained" color="primary">
+  Submit
+</Button>
+
+// After (Consta)
+<TextField
+  label="Email"
+  value={value}
+  onChange={({ value }) => setValue(value)}
+/>
+<Button view="primary" label="Submit" />
+```
+
+### 3. Navigation Components
+
+| MUI Component | Consta Equivalent | Migration Notes |
+|---------------|-------------------|-----------------|
+| `Tabs` | `Tabs` | Similar API, check tab structure |
+| `Tab` | `Tab` | Use within Consta Tabs |
+| `ToggleButton` | `ChoiceGroup` | For single/multiple selection |
+| `ToggleButtonGroup` | `ChoiceGroup` | Use `multiple` prop |
+| `Menu` | `ContextMenu` | Check positioning and trigger |
+
+### 4. Feedback Components
+
+| MUI Component | Consta Equivalent | Migration Notes |
+|---------------|-------------------|-----------------|
+| `Tooltip` | `Tooltip` | Similar API |
+| `Snackbar` | `SnackBar` | Check positioning and actions |
+| `Dialog` | `Modal` | Use Consta Modal component |
+| `Drawer` | `Sidebar` | Use Consta Sidebar |
+
+### 5. Theme & Styling
+
+| MUI Concept | Consta Equivalent | Migration Notes |
+|-------------|-------------------|-----------------|
+| `ThemeProvider` | `Theme` | Use Consta Theme component |
+| `useTheme()` | `useTheme()` | Consta hook, different structure |
+| `sx` prop | CSS classes | Use Consta design tokens |
+| `styled()` | CSS modules | Prefer Consta utilities |
+
+---
+
+## 🔄 **Migration Phases**
+
+### Phase 4.1: Core Components (Current)
+- [x] Audit all MUI usage (38 files found)
+- [ ] Migrate theme system (ThemeProvider → Theme)
+- [ ] Replace Box/Stack with Layout
+- [ ] Replace Typography with Text
+- [ ] Update main app layout
+
+### Phase 4.2: Form Components
+- [ ] Migrate all TextField instances
+- [ ] Replace Button/IconButton
+- [ ] Update Switch/Slider components
+- [ ] Migrate form validation
+
+### Phase 4.3: Complex Components
+- [ ] Migrate Tabs/Tab navigation
+- [ ] Replace ToggleButton with ChoiceGroup
+- [ ] Update Menu/ContextMenu
+- [ ] Migrate Dialog/Modal
+
+### Phase 4.4: Cleanup & Polish
+- [ ] Remove MUI dependencies
+- [ ] Update imports across codebase
+- [ ] Test all migrated components
+- [ ] Performance optimization
+
+---
+
+## 📁 **File-by-File Migration Plan**
+
+### High Priority Files (Core App):
+1. `src/main.tsx` - ThemeProvider → Theme
+2. `src/App/index.tsx` - Stack → Layout
+3. `src/theme.ts` - Complete theme migration
+4. `src/App/InspectorDrawer/index.tsx` - Drawer → Sidebar
+
+### Medium Priority (Components):
+5. All `input-panels/*.tsx` - Form components
+6. `TemplatePanel/*.tsx` - Navigation components
+7. `blocks/helpers/*.tsx` - Layout components
+
+### Low Priority (Block Editors):
+8. Block-specific components
+9. Utility components
+10. Test components
+
+---
+
+## 🎯 **Success Criteria**
+
+### Phase 4.1 Complete When:
+- [ ] No MUI imports in core app files
+- [ ] Consta theme fully configured
+- [ ] Main layout using Consta components
+- [ ] Typography migrated to Text
+- [ ] Build passes without MUI warnings
+
+### Phase 4 Complete When:
+- [ ] Zero MUI dependencies
+- [ ] All components use Consta
+- [ ] Visual consistency maintained
+- [ ] Performance equal or better
+- [ ] Accessibility preserved
+
+---
+
+## ⚠️ **Migration Risks & Mitigation**
+
+### Risk: API Differences
+**Mitigation**: Create wrapper components for complex migrations
+
+### Risk: Visual Regression
+**Mitigation**: Component-by-component testing with screenshots
+
+### Risk: Performance Impact
+**Mitigation**: Bundle size monitoring and performance testing
+
+### Risk: Accessibility Loss
+**Mitigation**: A11y testing after each component migration
+
+---
+
+## 🔧 **Migration Tools & Utilities**
+
+### Automated Migration Helpers:
+```bash
+# Find all MUI imports
+grep -r "@mui/material" src/ --include="*.tsx" --include="*.ts"
+
+# Find specific components
+grep -r "import.*{.*Button.*}" src/ --include="*.tsx"
+
+# Replace imports (example)
+sed -i 's/@mui\/material/\@consta\/uikit/g' file.tsx
+```
+
+### Component Wrapper Pattern:
+```tsx
+// Temporary wrapper for gradual migration
+import { Button as MuiButton } from '@mui/material'
+import { Button as ConstaButton } from '@consta/uikit'
+
+export const Button = USE_CONSTA ? ConstaButton : MuiButton
+```
+
+---
+
+**Next Steps**: Begin with theme migration and core layout components. 

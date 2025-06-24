@@ -4,7 +4,7 @@ import { setDocument, useDocument } from '../../documents/editor/EditorContext';
 
 import EmailLayoutSidebarPanel from './ConfigurationPanel/input-panels/EmailLayoutSidebarPanel';
 
-export default function StylesPanel() {
+export default function EmailSettingsPanel() {
   const block = useDocument().root;
   if (!block) {
     return <p>Block not found</p>;
@@ -16,4 +16,4 @@ export default function StylesPanel() {
   }
 
   return <EmailLayoutSidebarPanel key="root" data={data} setData={(data) => setDocument({ root: { type, data } })} />;
-}
+} 

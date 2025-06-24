@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 
 import { useDocument } from '../../documents/editor/EditorContext';
 
-import HighlightedCodePanel from './helper/HighlightedCodePanel';
+import { HighlightedCodePanel } from '../../shared/ui';
 
 export default function JsonPanel() {
   const document = useDocument();

@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { subscribeWithSelector } from 'zustand/middleware';
 
-import getConfiguration from '../../getConfiguration';
+import { getConfiguration } from '../../shared/lib';
 
 import { TEditorConfiguration } from './core';
 

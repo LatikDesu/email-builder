@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 import {
   Alert,
@@ -10,11 +10,11 @@ import {
   Link,
   TextField,
   Typography,
-} from '@mui/material';
+} from '@mui/material'
 
-import { resetDocument } from '../../../documents/editor/EditorContext';
+import { validateJsonStringValue } from '@shared/lib'
+import { resetDocument } from '../../../documents/editor/EditorContext'
 
-import validateJsonStringValue from './validateJsonStringValue';
 
 type ImportJsonDialogProps = {
   onClose: () => void;

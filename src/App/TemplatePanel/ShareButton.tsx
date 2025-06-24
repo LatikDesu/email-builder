@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
-import { IosShareOutlined } from '@mui/icons-material';
-import { IconButton, Snackbar, Tooltip } from '@mui/material';
+import { IconShare } from '@consta/icons/IconShare'
+import { Button } from '@consta/uikit/Button'
+import { SnackBar } from '@consta/uikit/SnackBar'
+import { Tooltip } from '@consta/uikit/Tooltip'
 
-import { useDocument } from '../../documents/editor/EditorContext';
+import { useDocument } from '../../documents/editor/EditorContext'
 
 export default function ShareButton() {
   const document = useDocument();
-  const [message, setMessage] = useState < string | null > (null);
+  const [message, setMessage] = useState<string | null>(null);
 
   const onClick = async () => {
     const c = encodeURIComponent(JSON.stringify(document));
@@ -19,18 +21,34 @@ export default function ShareButton() {
     setMessage(null);
   };
 
+  const buttonStyle: React.CSSProperties = {
+    minWidth: 'auto',
+    padding: '8px'
+  };
+
+  const snackBarItems = message ? [{
+    key: 'share-message',
+    message: message,
+    status: 'system' as const,
+    autoClose: 5
+  }] : [];
+
   return (
     <>
-      <IconButton onClick={onClick}>
-        <Tooltip title="Share current template">
-          <IosShareOutlined fontSize="small" />
-        </Tooltip>
-      </IconButton>
-      <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        open={message !== null}
-        onClose={onClose}
-        message={message}
+      <Tooltip content="Share current template">
+        <Button
+          onClick={onClick}
+          view="clear"
+          size="s"
+          iconLeft={IconShare}
+          onlyIcon
+          style={buttonStyle}
+        />
+      </Tooltip>
+      <SnackBar
+        items={snackBarItems}
+        onItemClose={onClose}
+        onItemAutoClose={onClose}
       />
     </>
   );
